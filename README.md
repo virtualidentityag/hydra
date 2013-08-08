@@ -26,7 +26,7 @@ they are installed automatically.
 Installation & Documentation
 ----------------------------
 
-Unfortunately docs are missing at the moment. Normally the following steps
+Unfortunately docs are missing at the moment. Normally the steps
 required to install this bundle are:
 
 1. Download Hydra using composer (virtualidentity/hydra dev-master)
