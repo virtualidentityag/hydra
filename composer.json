@@ -18,10 +18,10 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.3.*",
-        "virtualidentityag/hydra-twitter": "0.1.*",
-        "virtualidentityag/hydra-youtube": "0.1.*",
-        "virtualidentityag/hydra-facebook": "0.1.*",
-        "virtualidentityag/hydra-instagram": "0.1.*"
+        "virtualidentityag/hydra-twitter": "dev-master",
+        "virtualidentityag/hydra-youtube": "dev-master",
+        "virtualidentityag/hydra-facebook": "dev-master",
+        "virtualidentityag/hydra-instagram": "dev-master"
     },
     "autoload": {
         "psr-0": { "VirtualIdentity\\AggregatorBundle": "src/" }
