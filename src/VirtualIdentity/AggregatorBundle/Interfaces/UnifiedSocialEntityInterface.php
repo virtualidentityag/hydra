@@ -33,6 +33,8 @@ interface UnifiedSocialEntityInterface
     public function getVideoUrl();
     public function setLinkUrl($linkUrl);
     public function getLinkUrl();
+    public function setProfileImageUrl($profileImageUrl);
+    public function getProfileImageUrl();
     public function setApproved($approved);
     public function getApproved();
 }
