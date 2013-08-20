@@ -75,6 +75,7 @@ class AggregatorConverterService
         $unified->setForeignKey($socialEntity->getId());
         $unified->setCreated($socialEntity->getCreatedAt());
         $unified->setText($socialEntity->getText());
+        $unified->setProfileImageUrl($socialEntity->getProfileImageUrl());
         if ($socialEntity->getEntitiesMedia0MediaUrl()) {
             $unified->setImageUrl($socialEntity->getEntitiesMedia0MediaUrl());
         }
@@ -95,6 +96,7 @@ class AggregatorConverterService
         $unified->setCreated($socialEntity->getCreatedTime());
         $unified->setText($caption === null ? '' : $caption);
         $unified->setImageUrl($socialEntity->getImagesStandardResolutionUrl());
+        $unified->setProfileImageUrl($socialEntity->getProfilePicture());
     }
 
     /**
@@ -156,6 +158,10 @@ class AggregatorConverterService
         $unified->setImageUrl($photo);
         $unified->setVideoUrl($video);
         $unified->setLinkUrl($link);
+        $id = $socialEntity->getFromId();
+        if (!empty($id)) {
+            $unified->setProfileImageUrl("https://graph.facebook.com/" . $id . "/picture";);
+        }
     }
 
     /**
