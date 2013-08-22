@@ -29,7 +29,7 @@ Installation & Documentation
 Unfortunately docs are missing at the moment. Normally the steps
 required to install this bundle are:
 
-1. Download Hydra using composer (virtualidentity/hydra dev-master)
+1. Download Hydra using composer (virtualidentityag/hydra 0.1.0)
 2. Enable the Bundle in AppKernel.php
 3. Configure your application's security.yml
 4. Import the configuration in your config.yml (import hydra.yml)
