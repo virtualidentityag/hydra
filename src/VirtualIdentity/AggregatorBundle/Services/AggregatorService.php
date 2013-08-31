@@ -265,6 +265,7 @@ class AggregatorService
             throw new \InvalidArgumentException('The unified entity with ID '.$unifiedId.' could not be found!');
         }
 
+
         $socialEntity->setApproved($approved);
 
         $specialicedEntity = $this->converterService->getOriginalEntity($socialEntity);

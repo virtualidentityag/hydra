@@ -90,7 +90,7 @@ class UnifiedSocialEntity implements UnifiedSocialEntityInterface
     /**
      * @var boolean
      *
-     * @ORM\Column(name="approved", type="boolean")
+     * @ORM\Column(name="approved", type="boolean", nullable=true)
      */
     protected $approved;
 

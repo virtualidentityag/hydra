@@ -13,6 +13,10 @@ namespace VirtualIdentity\AggregatorBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use VirtualIdentity\TwitterBundle\DefaultController as TwitterController;
 
@@ -43,10 +47,6 @@ class DefaultController extends Controller
     {
         $service = $this->get('virtual_identity_aggregator');
 
-        if ($unifiedId !== null && $approved !== null && is_numeric($unifiedId) && ($approved == '1' || $approved == '0')) {
-            $service->setApproved($unifiedId, (bool)$approved);
-        }
-
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $service->getQueryBuilder(),
@@ -57,6 +57,22 @@ class DefaultController extends Controller
         return array(
             'feed' => $pagination
         );
+    }
+
+    /**
+     * @Route("/hydra/update/approved/{unifiedId}/{approved}", name="virtual_identity_aggregator_update_approved", requirements={"unifiedId" = "\d+", "approved" = "[-]?\d"})
+     * @Method({"POST"})
+     */
+    public function updateApprovedAction(Request $request, $unifiedId = null, $approved = null)
+    {
+        $service = $this->get('virtual_identity_aggregator');
+        
+        $approved = ($approved >= 0) ? (bool)$approved : null;
+        $service->setApproved($unifiedId, $approved);
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(array('status' => 'ok'));
+        }
+        return $this->forward('VirtualIdentityAggregatorBundle:Default:moderate');
     }
 
     /**

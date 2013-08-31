@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div id="content" class="container" data-action="moderate">
         <div class="row">
             <div class="col-lg-8">
                 <header>
@@ -50,7 +50,11 @@
                                 <td>{{ unified.type | split('\\') | last }}</td>
                                 <td>{{ unified.text }}</td>
                                 <td>{% if unified.imageUrl %}<a href="javascript://" class="preview-image-link" data-toggle="tooltip" title data-original-title="<img class='big-image' width='102px' src='{{ unified.imageUrl }}' />"><img class="preview-image" width="20px" src="{{ unified.imageUrl }}" /></a>{% endif %}</td>
-                                <td><a href="{{ path('virtual_identity_aggregator_moderate', {'unifiedId': unified.id, 'approved': unified.approved ? '0' : '1'}) }}">{{ unified.approved ? '✔' : '✖' }}</a></td>
+                                <td class="col_approve">
+                                    <a href="{{ path('virtual_identity_aggregator_update_approved', {'unifiedId': unified.id, 'approved': 1}) }}" {% if unified.approved == true %}class="active"{% endif %}>✔</a>
+                                    <a href="{{ path('virtual_identity_aggregator_update_approved', {'unifiedId': unified.id, 'approved': -1}) }}" {% if unified.approved is null %}class="active"{% endif %}>?</a>
+                                    <a href="{{ path('virtual_identity_aggregator_update_approved', {'unifiedId': unified.id, 'approved': false}) }}" {% if unified.approved is sameas(false) %}class="active"{% endif %}>✖</a>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
