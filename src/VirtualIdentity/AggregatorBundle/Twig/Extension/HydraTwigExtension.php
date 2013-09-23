@@ -1,6 +1,6 @@
 <?php
 
-namespace Opel\CarlaunchBundle\Twig\Extension;
+namespace VirtualIdentity\AggregatorBundle\Twig\Extension;
 
 use VirtualIdentity\AggregatorBundle\Entity\UnifiedSocialEntity;
 use VirtualIdentity\AggregatorBundle\Services\AggregatorConverterService;
