@@ -211,7 +211,7 @@ class HydraTwigExtension extends \Twig_Extension
 
     public function getName()
     {
-        return 'sm_feed_extension';
+        return 'hydra_feed_extension';
     }
 
    function _make_url_clickable_cb($matches) 
