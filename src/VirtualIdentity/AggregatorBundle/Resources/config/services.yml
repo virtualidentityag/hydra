@@ -24,3 +24,10 @@ services:
             - [setUnifiedSocialEntityClass, ["%virtual_identity_aggregator.unified_social_entity_class%"]]
             - [setAutoApprove, [%virtual_identity_aggregator.auto_approve%]]
             - [setHarvestedServices, [[@virtual_identity_twitter, @virtual_identity_instagram, @virtual_identity_facebook, @virtual_identity_youtube]]]
+    hydra_feed.twig.extension:
+        class: VirtualIdentity\AggregatorBundle\Twig\Extension\HydraTwigExtension
+        arguments:
+             converter: @virtual_identity_aggregator_converter
+        tags:
+            - { name: twig.extension }
+
