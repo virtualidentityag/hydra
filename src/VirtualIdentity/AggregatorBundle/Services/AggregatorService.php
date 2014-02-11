@@ -171,6 +171,37 @@ class AggregatorService
     }
 
     /**
+     * Will do the sync for all configured channels.
+     *
+     * @return void
+     */
+    public function importAllChannels()
+    {
+        foreach ($this->harvestedServices as $service) {
+            // we use duck typing here instead of interfaces.
+            // we try to keep the social media services independend
+            // of the AggregatorBundle
+            if (!method_exists($service, 'syncDatabase')) {
+                throw new AggregatorException('The service of class '.get_class($service).
+                    ' does not have a syncDatabase method and is therefor not usable by '.
+                    'the aggregator. Correct your services.yml');
+            }
+            /*
+            if (!method_exists($service, 'getFeed')) {
+                throw new AggregatorException('The service of class '.get_class($service).
+                    ' does not have a getFeed method and is therefor not usable by '.
+                    'the aggregator. Correct your services.yml');
+            }
+            */
+
+            $this->logger->debug('Importing data in '.get_class($service));
+
+            // sync database
+            $service->syncDatabase();
+        }
+    }
+
+    /**
      * Syncs the database of unified entities with the entities of each social
      * channel configured to be looked up by the aggregator
      *

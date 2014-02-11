@@ -79,6 +79,8 @@ class AggregatorConverterService
         if ($socialEntity->getEntitiesMedia0MediaUrl()) {
             $unified->setImageUrl($socialEntity->getEntitiesMedia0MediaUrl());
         }
+        $unified->setLinkUrl('http://twitter.com/' . $socialEntity->getUserId() . '/status/' . $socialEntity->getIdStr());
+        $unified->setUsername($socialEntity->getUserScreenName());
     }
 
     /**
@@ -97,6 +99,8 @@ class AggregatorConverterService
         $unified->setText($caption === null ? '' : $caption);
         $unified->setImageUrl($socialEntity->getImagesStandardResolutionUrl());
         $unified->setProfileImageUrl($socialEntity->getUserProfilePicture());
+        $unified->setLinkUrl($socialEntity->getLink());
+        $unified->setUsername($socialEntity->getUserUsername());
     }
 
     /**
@@ -115,6 +119,7 @@ class AggregatorConverterService
         $unified->setText($text === null ? '' : $text);
         $unified->setImageUrl($socialEntity->getSnippetThumbnailsHighUrl());
         $unified->setVideoUrl('http://youtu.be/'.$socialEntity->getSnippetResourceIdVideoId());
+        $unified->setLinkUrl('http://youtu.be/'.$socialEntity->getSnippetResourceIdVideoId());
     }
 
     /**
@@ -162,6 +167,7 @@ class AggregatorConverterService
         if (!empty($id)) {
             $unified->setProfileImageUrl("https://graph.facebook.com/" . $id . "/picture");
         }
+        $unified->setUsername($socialEntity->getFromName());
     }
 
     /**

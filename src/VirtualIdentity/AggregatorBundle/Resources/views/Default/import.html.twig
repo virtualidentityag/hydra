@@ -1,0 +1,37 @@
+{% extends 'VirtualIdentityAggregatorBundle::base.html.twig' %}
+
+{% block title %} synchronization{% endblock %}
+
+{% block body %}
+    <div id="content" class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <header>
+                    <h1>Aggregator import over all channels</h1>
+                </header>
+            </div>
+            <div class="col-lg-4" style="padding-top: 2em">
+                {% include 'VirtualIdentityAggregatorBundle::nav.html.twig' with {'active': 'sync'} %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+
+                <section>
+                    <p>Import done.</p>
+                    <p>
+                        You have just imported from all configured channels. <br />
+                        If you just want to update specific channels, navigate to that channel, press "sync" there and do a "sync" in "All Channels". Synching will only make already imported entities available under "All Channels".
+                    </p>
+                    <p>
+                        <emph>Warning:</emph> Importing over all social channels may cause errors
+                        on certain services if they are wrongly configured. Those errors are
+                        surpressed quietly, so <emph>make absolutely sure your services are correctly configured and import in the various channels separately from time to time to make sure your credentials are still valid!</emph><br />
+                        Note that this also implies that allthough you see "Synchronization
+                        done" it might not actually have worked. :(
+                    </p>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}

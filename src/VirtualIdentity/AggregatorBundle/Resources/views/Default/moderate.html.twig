@@ -35,21 +35,42 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th{% if feed.isSorted('a.created') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(feed, 'Created', 'a.created') }}</th>
-                                <th{% if feed.isSorted('a.type') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(feed, 'Entity class name', 'a.type') }}</th>
-                                <th{% if feed.isSorted('a.text') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(feed, 'Text', 'a.text') }}</th>
+                                <th{% if feed.isSorted('e.created') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(feed, 'Created', 'e.created') }}</th>
+                                <th{% if feed.isSorted('e.type') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(feed, 'Entity class name', 'e.type') }}</th>
+                                <th{% if feed.isSorted('e.username') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(feed, 'User', 'e.username') }}</th>
+                                <th{% if feed.isSorted('e.text') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(feed, 'Text', 'e.text') }}</th>
                                 <th>Image</th>
-                                <th{% if feed.isSorted('a.approved') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(feed, 'Approved', 'a.approved') }}</th>
+                                <!--
+                                <th{% if feed.isSorted('e.approved') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(feed, 'Approved', 'e.approved') }}</th>-->
+                                <th class="btn-group col_approve">
+                                  <button type="button" class="btn btn-default btn-small dropdown-toggle" data-toggle="dropdown">
+                                    {{approved}}
+                                    <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('virtual_identity_aggregator_moderate', {unifiedId: 'null', approved: 'all'}) }}">All</a></li>
+                                    <li><a href="{{ path('virtual_identity_aggregator_moderate', {unifiedId: 'null', approved: 'approved'}) }}">Approved</a></li>
+                                    <li><a href="{{ path('virtual_identity_aggregator_moderate', {unifiedId: 'null', approved: 'undecided'}) }}">Undecided</a></li>
+                                    <li><a href="{{ path('virtual_identity_aggregator_moderate', {unifiedId: 'null', approved: 'disapproved'}) }}">Disapproved</a></li>
+                                  </ul>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
 
                             {% for unified in feed %}
                             <tr>
-                                <td>{{ unified.created | date }}</td>
+                                <td>
+                                    {% if unified.linkUrl %}
+                                        <a href="{{unified.linkUrl}}" target="_blank">{{ unified.created | date }}</a>
+                                    {% else %}
+                                        {{ unified.created | date }}
+                                    {% endif %}
+                                </td>
                                 <td>{{ unified.type | split('\\') | last }}</td>
+                                <td>{{ unified.username }}</td>
                                 <td>{{ unified.text }}</td>
-                                <td>{% if unified.imageUrl %}<a href="javascript://" class="preview-image-link" data-toggle="tooltip" title data-original-title="<img class='big-image' width='102px' src='{{ unified.imageUrl }}' />"><img class="preview-image" width="20px" src="{{ unified.imageUrl }}" /></a>{% endif %}</td>
+                                <td>{% if unified.imageUrl %}<a href="{{ unified.imageUrl }}" target="_blank" class="preview-image-link" data-toggle="tooltip" title data-original-title="<img class='big-image' width='400px' src='{{ unified.imageUrl }}' />"><img class="preview-image" width="40px" src="{{ unified.imageUrl }}" /></a>{% endif %}</td>
                                 <td class="col_approve">
                                     <a href="{{ path('virtual_identity_aggregator_update_approved', {'unifiedId': unified.id, 'approved': 1}) }}" {% if unified.approved == true %}class="active"{% endif %}>✔</a>
                                     <a href="{{ path('virtual_identity_aggregator_update_approved', {'unifiedId': unified.id, 'approved': -1}) }}" {% if unified.approved is null %}class="active"{% endif %}>?</a>

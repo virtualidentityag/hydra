@@ -43,19 +43,34 @@ class DefaultController extends Controller
      * @Route("/hydra/moderate/{unifiedId}/{approved}", name="virtual_identity_aggregator_moderate")
      * @Template()
      */
-    public function moderateAction($unifiedId = null, $approved = null)
+    public function moderateAction($unifiedId = null, $approved = 'all')
     {
         $service = $this->get('virtual_identity_aggregator');
+        $qb = $service->getQueryBuilder();
+
+        $app_map = array(
+            'approved' => 1,
+            'disapproved' => 0,
+            'undecided' => null     
+        );
+
+        if (array_key_exists($approved, $app_map)) {
+            if ($app_map[$approved] === null) $qb->andWhere('e.approved IS NULL');
+            else $qb->andWhere('e.approved = '.$app_map[$approved]);
+        }
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $service->getQueryBuilder(),
+            $qb,
             $this->get('request')->query->get('page', 1), /*page number*/
             20 /*limit per page*/
         );
+        $pagination->setParam('unifiedId', $unifiedId);
+        $pagination->setParam('approved', $approved);
 
         return array(
-            'feed' => $pagination
+            'feed' => $pagination,
+            'approved' => ucfirst($approved)
         );
     }
 
@@ -84,6 +99,19 @@ class DefaultController extends Controller
         $service = $this->get('virtual_identity_aggregator');
 
         $service->syncDatabase();
+
+        return array();
+    }
+
+    /**
+     * @Route("/hydra/import", name="virtual_identity_aggregator_import")
+     * @Template()
+     */
+    public function importAction()
+    {
+        $service = $this->get('virtual_identity_aggregator');
+
+        $service->importAllChannels();
 
         return array();
     }

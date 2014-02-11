@@ -88,6 +88,13 @@ class UnifiedSocialEntity implements UnifiedSocialEntityInterface
     private $profileImageUrl;   
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=255, nullable=true)
+     */
+    private $username;   
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="approved", type="boolean", nullable=true)
@@ -171,6 +178,28 @@ class UnifiedSocialEntity implements UnifiedSocialEntityInterface
     public function getProfileImageUrl()
     {
         return $this->profileImageUrl;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return UnifiedSocialEntity
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+     * Get foreignKey
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
     }
 
     /**
