@@ -17,11 +17,13 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.3.*",
-        "virtualidentityag/hydra-twitter": "0.3.*",
-        "virtualidentityag/hydra-youtube": "0.3.*",
-        "virtualidentityag/hydra-facebook": "0.3.*",
-        "virtualidentityag/hydra-instagram": "0.3.*"
+        "symfony/symfony": "~2.3"
+    },
+    "suggest": {
+        "virtualidentityag/hydra-twitter": "Add Twitter Bundle to add Twitter entities",
+        "virtualidentityag/hydra-youtube": "Add Youtube Bundle to add Youtube entities",
+        "virtualidentityag/hydra-facebook": "Add Facebook Bundle to add Facebook entities",
+        "virtualidentityag/hydra-instagram": "Add Instagram Bundle to add Instagram entities"
     },
     "autoload": {
         "psr-0": { "VirtualIdentity\\AggregatorBundle": "src/" }
