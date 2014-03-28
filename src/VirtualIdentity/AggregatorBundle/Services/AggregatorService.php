@@ -161,10 +161,13 @@ class AggregatorService
      *
      * @return List<UnifiedSocialEntityInterface>
      */
-    public function getFeed($limit = false)
+    public function getFeed($limit = false, $offset = false)
     {
         if ($limit !== false && is_int($limit)) {
             $this->qb->setMaxResults($limit);
+        }
+        if ($offset !== false && is_int($offset)) {
+            $this->qb->setFirstResult($offset);
         }
         $this->qb->andWhere('e.approved = 1');
         return $this->qb->getQuery()->getResult();
